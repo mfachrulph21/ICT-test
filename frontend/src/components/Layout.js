@@ -25,7 +25,7 @@ export default function Layout() {
             defaultSelectedKeys={window.location.pathname}
             items={[
               {
-                label: "Statistics",
+                label: "Statistics Covid",
                 key: "/",
                 icon: <PieChartOutlined />,
               },

@@ -1,4 +1,10 @@
-import { SET_DATA_JSON, SET_DATA_DETAIL, SET_DATA_COIN } from "../actionTypes/index";
+import {
+  SET_DATA_JSON,
+  SET_DATA_DETAIL,
+  SET_DATA_COIN,
+  SET_DATA_COVID,
+} from "../actionTypes/index";
+import axios from "axios";
 const baseUrl = "https://jsonplaceholder.typicode.com/posts";
 
 function successFetchUserPost(payload) {
@@ -19,7 +25,7 @@ function fetchUserPosts() {
         throw new Error("Failed fetch data from jsonplaceholder");
 
       const userPosts = await response.json();
-      console.log(userPosts, 'INI USERPOST DI ACTION')
+      console.log(userPosts, "INI USERPOST DI ACTION");
 
       dispatch(successFetchUserPost(userPosts));
     } catch (error) {
@@ -31,8 +37,7 @@ function fetchUserPosts() {
 function addUserPosts(payload) {
   return async (dispatch) => {
     try {
-      const response = await fetch({
-        url: `${baseUrl}`,
+      const response = await fetch(`${baseUrl}`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: {
@@ -59,7 +64,7 @@ function successFetchDetail(payload) {
 function postDetail(id) {
   return async (dispatch) => {
     try {
-      const response = await fetch(`${baseUrl}/${id}`,{
+      const response = await fetch(`${baseUrl}/${id}`, {
         method: "GET",
       });
 
@@ -78,10 +83,9 @@ function postDetail(id) {
 function editPostAction(payload, id) {
   return async (dispatch) => {
     try {
-
       delete payload.id;
 
-      const response = await fetch(`${baseUrl}/${id}`,{
+      const response = await fetch(`${baseUrl}/${id}`, {
         method: "PUT",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -113,43 +117,81 @@ function deleteUserPosts(id) {
 }
 
 function successFetchCoinsData(payload) {
-  console.log('masuk successnya gak')
   return {
-    action: SET_DATA_COIN,
-    data : payload
-  }
+    type: SET_DATA_COIN,
+    data: payload,
+  };
 }
 
 function fetchCoinsData() {
   return async (dispatch) => {
     try {
-      let apiKey = 'coinrankingf63b42037dcb180c6f909b5fb55452a51210809e7a38b5d4'
-      let coinURL = 'https://api.coinranking.com/v2/coins/?limit=10'
-      let proxyUrl = 'https://cors-anywhere.herokuapp.com/corsdemo'
+      let apiKey =
+        "coinrankingf63b42037dcb180c6f909b5fb55452a51210809e7a38b5d4";
+      let coinURL = "https://api.coinranking.com/v2/coins/?limit=10";
+      let proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
-      let response = await fetch(`${proxyUrl}${coinURL}`, {
-        method: 'GET',
+      let response = await axios(`${proxyUrl}${coinURL}`, {
+        method: "GET",
         headers: {
-          'Content-type': "application/json",
-          'x-access-token': `${apiKey}`,
-          'Access-Control-Allow-Origin':'*'
-        }
-      })
+          "Content-type": "application/json",
+          "x-access-token": `${apiKey}`,
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
 
-      console.log(response, 'ini responsenya')
+      console.log(response, "ini responsenya");
 
+      if (!response.ok) throw new Error("Failed fetch coin ranking data");
 
+      let coinRanking = await response.json();
 
-      if(!response.ok) throw new Error('Failed fetch coin ranking data')
-
-      let coinRanking  = await response.json()
- 
-
-      dispatch(successFetchCoinsData(coinRanking))
+      dispatch(successFetchCoinsData(coinRanking));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+}};
+
+function successFetchCovidData(payload) {
+  return {
+    type: SET_DATA_COVID,
+    data: payload,
+  };
 }
 
-export { fetchUserPosts, addUserPosts, postDetail, editPostAction, deleteUserPosts, fetchCoinsData };
+  function fetchDataCovid() {
+    return async (dispatch) => {
+      try {
+
+        let response = await fetch('https://api.covid19api.com/summary', {
+          method: "GET",
+        });
+  
+  
+        if (!response.ok) throw new Error("Failed fetch covid data");
+  
+        let covidData = await response.json()
+
+
+       let dataCovidToStored =   await covidData?.Countries.slice(0,10)
+  
+        dispatch(successFetchCovidData(dataCovidToStored));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+  
+
+}
+
+export {
+  fetchUserPosts,
+  addUserPosts,
+  postDetail,
+  editPostAction,
+  deleteUserPosts,
+  fetchCoinsData,
+  fetchDataCovid
+};

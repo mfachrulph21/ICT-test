@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 // import {Chart as ChartJS, BarElement} from 'chart.js'
-import { Bar } from 'react-chartjs-2'
+import { Pie } from 'react-chartjs-2'
 import 'chart.js/auto';
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDataCovid } from "../store/actions";
 
 
-function BarChart() {
+function PieChart() {
     const dispatch = useDispatch();
  
   
@@ -22,13 +22,13 @@ function BarChart() {
     })
 
     const dataSets = dataCovid.map((el) => {
-      return el.TotalConfirmed
+      return el.TotalDeaths
     })
     
     const data = {
         labels: labels,
         datasets: [{
-          label: 'Total Confirmed Covid',
+          label: 'Total Deaths',
           data: dataSets,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -62,11 +62,11 @@ function BarChart() {
 
     return (
         <div>
-            <Bar
+            <Pie
             data={data}
             />
         </div>
     )
 }
 
-export default BarChart;
+export default PieChart;
