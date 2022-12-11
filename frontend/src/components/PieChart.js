@@ -14,9 +14,6 @@ function PieChart() {
       return state
     })
 
-
-    console.log(dataCovid, 'ini data covidnya masuk gak')
-
     const labels = dataCovid.map((el) => {
       return el.Country
     })
@@ -51,8 +48,6 @@ function PieChart() {
           borderWidth: 1
         }]
       };
-    
-
     
 
     useEffect(() => {

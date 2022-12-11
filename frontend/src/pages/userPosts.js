@@ -39,12 +39,9 @@ function UserPostsPage() {
   const [isAddNewPost, setIsAddNewPost] = useState(false);
 
 
- 
-
 
   function viewDetailPost(id) {
     dispatch(postDetail(id));
-
     setIsViewDetail(true);
   }
 
@@ -203,7 +200,6 @@ function UserPostsPage() {
 
   useEffect(() => {
     setEditingPost(detailPost)
-
   }, [detailPost])
 
   return (

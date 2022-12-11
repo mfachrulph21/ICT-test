@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import {Chart as ChartJS, BarElement} from 'chart.js'
 import { Bar } from 'react-chartjs-2'
 import 'chart.js/auto';
 import { useDispatch, useSelector } from "react-redux";
@@ -13,9 +12,6 @@ function BarChart() {
     const { dataCovid } = useSelector((state) => {
       return state
     })
-
-
-    console.log(dataCovid, 'ini data covidnya masuk gak')
 
     const labels = dataCovid.map((el) => {
       return el.Country
@@ -51,8 +47,6 @@ function BarChart() {
           borderWidth: 1
         }]
       };
-    
-
     
 
     useEffect(() => {

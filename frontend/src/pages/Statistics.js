@@ -22,8 +22,7 @@ function StatisticsPage() {
           <div style={{ margin:'auto',  width:'80%', height:'300px'}}>
               <LineChart />
           </div>
-
-          
+   
         </div>
         <div style={{display: 'flex', justifyContent: 'center', width:'100%', height:'300px'}}>
               <PieChart />
