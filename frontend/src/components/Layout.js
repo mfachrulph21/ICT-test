@@ -8,25 +8,33 @@ export default function Layout() {
   const navigate = useNavigate();
   return (
     <>
-      <div style={{ display: "flex", flexDirection: "column", flex: 1, height:'100vh' }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          height: "100vh",
+        }}
+      >
         <Header />
         <div style={{ display: "flex", flexDirection: "row", flex: 1 }}>
           <Menu
             onClick={({ key }) => {
               navigate(key);
             }}
+            defaultSelectedKeys={window.location.pathname}
             items={[
               {
-                label: "User Statistics",
+                label: "Statistics",
                 key: "/",
                 icon: <PieChartOutlined />,
               },
-              { label: "User Posts", key: "/posts", icon: <UserOutlined /> },
+              { label: "Posts", key: "/posts", icon: <UserOutlined /> },
             ]}
           ></Menu>
           <Outlet />
         </div>
-         <Footer/>
+        <Footer />
       </div>
     </>
   );

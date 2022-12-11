@@ -1,8 +1,9 @@
-import {SET_DATA_JSON, SET_DATA_DETAIL} from '../actionTypes/index'
+import {SET_DATA_JSON, SET_DATA_DETAIL, SET_DATA_COIN} from '../actionTypes/index'
 
 let initialState = {
     postUser: [],
-    detailPost: {}
+    detailPost: {},
+    dataCoins: []
 }
 
 function dataReducer(state = initialState, action) {
@@ -17,6 +18,12 @@ function dataReducer(state = initialState, action) {
             return {
                 ...state,
                 detailPost: action.data
+            }
+
+        case SET_DATA_COIN:
+            return {
+                ...state,
+                dataCoins: action.data
             }
 
         default: {
